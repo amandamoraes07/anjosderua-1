@@ -1,5 +1,4 @@
-<?php 
-    namespace app\server\controllers;
+<?php namespace app\server\controllers;
 
     //Necessário devido a utilização do autoload
 	use PDO;

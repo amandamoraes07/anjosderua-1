@@ -6,6 +6,7 @@
 		protected static $params   = array();
 		protected static $folder;
 		protected static $notFound = true;
+
 		private static function compareParams($URI, $endPoint)
 		{
 			//valida os parametros não dinamicos
@@ -21,6 +22,7 @@
 			//se chegar aqui, quer dizer que os parametros não dinâmicos são iguais nas mesmas posições dos dois arrays
 			return true;
 		}
+
 		//percorre os parametros dinamicos e coloca o valor passado, dentro de self:params
 		private static function mountParamsDinamic($URI, $endPoint)
 		{
@@ -32,20 +34,25 @@
 				}
 			}
 		} 
+
 		private static function testURI($endPoint, $_callback)
 		{
 			//recupera o nome do dirroot, pois esta na uri. Mas é necessário remover \app\server
 			self::$folder = __DIR__;
 			self::$folder = str_replace("\app\server\controllers", "", self::$folder);
 			self::$folder = "/".basename(self::$folder);
+
 			//removo a folder root da uri
 			$URI = str_replace(self::$folder, "", $_SERVER ['REQUEST_URI']);
+
 			//criando os array's
 			$arrURI      = explode("/", $URI);
 			$arrEndPoint = explode("/", $endPoint);
+
 			//preciso medir o tamanho da uri atual e do endpoint desejado
 			$sizeURI      = count( $arrURI );
 			$sizeEndPoint = count( $arrEndPoint );
+
 			//são do mesmo tamanho e os parametros não dinamicos são iguais?
 			if( $sizeURI == $sizeEndPoint and self::compareParams($arrURI, $arrEndPoint) )
 			{
@@ -53,6 +60,7 @@
 				//basta devolver os parametros dinamicos e chamar o callback
 				self::mountParamsDinamic($arrURI, $arrEndPoint);
 				self::$notFound = false;
+
 				//se o metodo for put, add o fluxo de entrada no array de parâmetros da classe
 				if($_SERVER['REQUEST_METHOD'] == "PUT") 
 				{
@@ -69,23 +77,28 @@
 				exit;
 			}
 		}
+
  		public static function get($_url, $_callback)
 		{
 			if( $_SERVER['REQUEST_METHOD'] == "GET" )self::testURI($_url, $_callback);
 		}
+
 		public static function post($_url, $_callback)
 		{
 			if( $_SERVER['REQUEST_METHOD'] == "POST" )self::testURI($_url, $_callback);
 		}
+
 		public static function put($_url, $_callback)
 		{
 			if( $_SERVER['REQUEST_METHOD'] == "PUT" )self::testURI($_url, $_callback);
 		}
+
 		public static function delete($_url, $_callback)
 		{
 			if( $_SERVER['REQUEST_METHOD'] == "DELETE" )self::testURI($_url, $_callback);
 		}
 		
+
 		/**
 		 * Recebe um json enviado no corpo da requisição
 		 * Pode ser ou não stringify
@@ -96,10 +109,12 @@
 			$input  = json_decode($input);
 			return (gettype( $input ) == "string") ? json_decode($input) : $input;
 		}
+
 		public static function notFound( $template )
 		{
 			if( self::$notFound === true ) self::View($template);
 		}
+
 	    public static function View( $_tpl, $_flags=null )
 	    {
 			if($_flags == null)
@@ -108,11 +123,14 @@
 				echo str_replace(array_keys($_flags), array_values($_flags), file_get_contents($_tpl) );
 		}	
 		
+
 		public static function dev()
 		{
 			error_reporting(E_ALL);
 			ini_set("display_errors", 1);
 		}
+
+
 		/**
 		 * Tratativas de erro e finalização do fluxo
 		 */
@@ -121,6 +139,7 @@
 			echo json_encode( array("error" => $message ) );
 			exit;
 		}
+
 		/***
 		 * 
 		 * Gerador de JWT
@@ -131,7 +150,7 @@
 		public static function Jwt()
 		{
 			$vencimento= array("vencimento"=>Date('d:m:Y'));
-			$key       = 'secret289143-desenvolvimento';
+			$key       = 'soriano.dev';
 			$header    = array('typ'  => 'JWT','alg'  => 'HS256');
 			$header    = json_encode($header);
 			$header    = base64_encode($header);
@@ -144,6 +163,8 @@
 			$token     = str_replace("+", "-ww-", $token);
 			return json_encode( array( 'token' => $token ) );
 		}
+
+
 		/**
 		 * Valida o jwt que vem no header da requisição
 		 * O jwt deverá ser enviado no Authorization
@@ -153,6 +174,7 @@
 			if( isset( apache_request_headers()["Authorization"] ) ) 
 			{
 				$token=apache_request_headers()["Authorization"];
+
 				if( ($token === json_decode( self::jwt() )->token) == false ) 
 					self::Err("Invalid-jwt");
 			}
@@ -161,29 +183,17 @@
 			
 		}
 
-        //Retorna dados da requisição em JSON | status 200
-        public static function Json( $data )
+		public static function Json( $data )
 		{
 			header("Content-Type: application/json; charset=utf-8");
-			if( gettype($data) !== "array" ) $data = array("resp"=>$data);
+			if( gettype($data) !== "array" ) $data = array("response"=>$data);
 			$headers = array(
 				"Content_type"=>"application/json",
-				//"status"=>$_SERVER['REDIRECT_STATUS'],
-				//"metod_http"=>$_SERVER['REQUEST_METHOD'],
-				//"url"=>$_SERVER['SERVER_NAME'].$_SERVER['REDIRECT_URL'],
 				"time_stamp"=>date("d-m-Y")." ".date("h:m:s"),
 				"data"=> $data
 			);
 			print_r(json_encode($headers));
 		}
 		
-		/**
-		 * Define diretório root
-		 */
-		public static function dirRoot($_dir)
-		{
-			self::$folder = "/".$_dir;
-		}
-
 	}
 ?>

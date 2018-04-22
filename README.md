@@ -33,3 +33,4 @@ Desenvolvedor | Thumbnail
 --------- | ------:
 [Soriano](https://github.com/gustavoSoriano) | <img src="https://avatars3.githubusercontent.com/u/20995835?s=460&v=4" width="100"/>
 [Lucas Costa](https://github.com/01lucas-costa) | <img src="https://avatars3.githubusercontent.com/u/28660804?s=460&v=4" width="100"/>
+[Amanda Moraes](https://github.com/amandamoraes07) | <img src="https://avatars2.githubusercontent.com/u/33162975?s=460&v=4" width="100"/>

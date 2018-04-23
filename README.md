@@ -13,7 +13,7 @@ Php     | Linguagem backend
 Jwt    | Autenticação
 Json    | Troca de informação
 Composer.json  | Autoload com psr4
-PDO  | Interface para trabahar banco
+PDO  | Interface para trabalhar banco
 Mysql  | Banco de dados
 
 ## Progresso:

@@ -13,7 +13,7 @@ Php     | Linguagem backend
 Jwt    | Autenticação
 Json    | Troca de informação
 Composer.json  | Autoload com psr4
-PDO  | Interface para trabahar banco
+PDO  | Interface para trabalhar banco
 Mysql  | Banco de dados
 
 ## Progresso:
@@ -34,3 +34,5 @@ Desenvolvedor | Thumbnail
 [Soriano](https://github.com/gustavoSoriano) | <img src="https://avatars3.githubusercontent.com/u/20995835?s=460&v=4" width="100"/>
 [Lucas Costa](https://github.com/01lucas-costa) | <img src="https://avatars3.githubusercontent.com/u/28660804?s=460&v=4" width="100"/>
 [Amanda Moraes](https://github.com/amandamoraes07) | <img src="https://avatars2.githubusercontent.com/u/33162975?s=460&v=4" width="100"/>
+[Guilherme Alves](https://github.com/ghfa) | <img src="https://avatars1.githubusercontent.com/u/28818073?s=460&v=4" width="100"/>
+

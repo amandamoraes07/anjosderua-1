@@ -62,6 +62,19 @@
                 Router::Json(401);
         });
     //End Point Login para Associados
+    
+    //End Point Login para Associados
+        Router::post('/adminauthentication', function() {
+            $dados = Router::getJson();
+
+            $logar = new Auth($dados->login, $dados->password, 2); //2-> é o tipo de usuario administrador
+
+            if ($logar->logar() !== 'err')
+                Router::Json($logar->logar());
+            else
+                Router::Json(401);
+        });
+    //End Point Login para Associados
 
 
     Router::notFound("./app/client/notFound.html");

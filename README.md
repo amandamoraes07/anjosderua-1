@@ -23,8 +23,8 @@ Mysql  | Banco de dados
 - [ ] Crud de denúncias
 - [ ] Crud de adoçoes
 - [ ] Crud de mensagens
-- [X] Login App
-- [ ] Login Admin
+- [x] Login App
+- [x] Login Admin
 - [ ] Filtro para busca de animais
 
 # Contribuidores
